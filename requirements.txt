@@ -1,0 +1,5 @@
+wordcloud==1.8.1
+jieba==0.42.1
+image==1.5.33
+numpy==1.21.3
+matplotlib==3.4.3
