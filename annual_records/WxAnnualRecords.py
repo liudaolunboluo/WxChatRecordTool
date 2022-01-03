@@ -4,12 +4,17 @@ import jieba
 from collections import defaultdict
 import re
 from wordcloud import WordCloud, ImageColorGenerator
+import sys
 
-from annual_records.WxRecord import WxRecord
-import PIL
-from PIL import ImageFont
-from PIL import Image
-from PIL import ImageDraw
+
+class WxRecord:
+
+    def __init__(self, create_time, to_user, from_user):
+        self.create_time = create_time
+        # 我发给他
+        self.to_user = to_user
+        # 他发给我
+        self.from_user = from_user
 
 
 def convertTime(m_uiCreateTime):
@@ -33,15 +38,15 @@ def make_word_clound(content, output_path):
     seg_list = jieba.cut(content, cut_all=True)
     target = "/ ".join(seg_list)
     # 停词，主要是去掉一些语气词，比如"了"、"的"
-    stopwords = open("stopwords.txt").read().split("\n")
+    stopwords = open("stopwords.txt", encoding='UTF-8').read().split("\n")
     # 初始化词云组建
     w = WordCloud(width=800, height=400, font_path='simsun.ttf', background_color="white",
                   max_words=500, max_font_size=200, random_state=200, stopwords=stopwords)
     # 注入我们分好词了的内容
     w.generate(target)
     # 输出png格式的图片
-    w.to_file(output_path + '/simpleresult.png')
-    return output_path + '/simpleresult.png'
+    w.to_file(output_path + '/result.png')
+    return output_path + '/result.png'
 
 
 def check(str):
@@ -53,8 +58,18 @@ def check(str):
         return True
 
 
-message_path = '/Users/zhangyunfan/Desktop/message.json'
-with open(message_path, 'r') as content_j:
+if len(sys.argv) < 3:
+    print("请输入参数")
+    exit()
+message_path = sys.argv[1]
+output_path = sys.argv[2]
+if len(message_path) == 0:
+    print("请输入聊天记录的路径")
+    exit()
+if len(output_path) == 0:
+    print("请输入输出图片的路径")
+    exit()
+with open(message_path, 'r', encoding='UTF-8') as content_j:
     load_dict = json.load(content_j)
     # 聊天对象
     user_name = load_dict['owner']['name']
@@ -105,5 +120,4 @@ with open(message_path, 'r') as content_j:
     # print('{}发给你{}条消息'.format(user_name, len(from_user_list)))
     # print('聊天最多的一天是{},这一天你们一共发了{}条消息'.format(list(date_count_map)[0][0], list(date_count_map)[0][1]))
     # print('{}这一天你们{}还在发消息'.format(late_record[0], late_record[1]))
-    output_path = '/Users/zhangyunfan/Desktop'
     make_word_clound(content, output_path)
