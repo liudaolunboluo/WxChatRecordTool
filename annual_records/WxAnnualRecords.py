@@ -108,7 +108,10 @@ with open(message_path, 'r', encoding='UTF-8') as content_j:
         # 取出小时数，小于6点的就算是凌晨晚上的消息，是最晚的消息
         if (int(hms_str.split(':')[0]) < 6):
             late_record = date
-    # 输出结果
+    if not late_record:
+        # 如果没有0点到6点的数据那么就取12点前最晚的记录
+        late_record = list(late_record_map)[len(late_record_map) - 1]
+        # 输出结果
     print('今年，你和{}一共有{}天有过交流，你们一共互相发了{}条信息，你发给{}发了{}条消息，{}给你发了{}条消息。在{}这一天你们一共发了{}条消息，在{}这一天你们在深夜{}还在聊天'
           .format(user_name, len(date_map), len(wxRecord_list), user_name, len(to_user_list), user_name,
                   len(from_user_list), list(date_count_map)[0][0], list(date_count_map)[0][1], late_record[0],
