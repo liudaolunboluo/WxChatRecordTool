@@ -42,7 +42,7 @@
 
 2、windows下执行命令`pip install -r requirements.txt`，mac下执行`pip3 install -r requirements.txt` 来安装依赖，如果提示`no command pip`的话，说明你的python安装没有完成，请跳回到上文中的安装Python环境中仔细检查。
 
-3、执行命令：` python ChatRecordWorldCloud.py 你刚刚另存为json的文件的全路径 你期望生成图片的所在路径`，比如说:` python wxclound.py /Users/zhangyunfan/Desktop/message /Users/zhangyunfan/Desktop` 然后就会在你指定的路径上生成一个`result.png`了，这个就是根据你聊天记录所生成的词云。
+3、执行命令：` python ChatRecordWorldCloud.py 你刚刚另存为json的文件的全路径 你期望生成图片的所在路径`，比如说:` python ChatRecordWorldCloud.py /Users/zhangyunfan/Desktop/message.json /Users/zhangyunfan/Desktop` 然后就会在你指定的路径上生成一个`result.png`了，这个就是根据你聊天记录所生成的词云。
 
 4、当然了并不是所有人审美都和笔者一样，所以笔者提供了一个不要特殊字体和背景的简单词云生成文件：`ChatRecordWorldCloudSimple.py`，将上一步命令中的`ChatRecordWorldCloud.py`替换成`ChatRecordWorldCloudSimple.py`就可以了，生成的就是`simpleresult.png`
 
